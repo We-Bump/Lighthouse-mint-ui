@@ -68,6 +68,7 @@ UI relies on `src/config.json` file for configuration of launch.
 
 ##### group options
 `name` - group name
+
 `allowlist` - array of allowlistled wallets. (if merkle root is set for minting group in lighthouse config)
 
 
