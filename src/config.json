@@ -1,0 +1,19 @@
+{
+    "name":"My Project",
+    "description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu aliquet ultricies, urna elit aliquam nunc, quis aliquet nunc nisl quis nisl.",
+    "rpc":"http://127.0.0.1:26657/",
+    "network":"atlantic-2", 
+    "collection_address":"sei1tkzcnkln5fl8ytlcafcp9wdujw62hadwpn65c5lwz668275vlgys8tf88p", 
+    "groups":[
+        {
+            "name":"whitelist",
+            "allowlist":[
+                "sei14v72v7hgzuvgck6v6jsgjacxnt34gj06qnx53d",
+                "sei1t22vwusjlxg4vp7gttsx7n2y9u4k0vv9lpk2ge"
+            ] 
+        },
+        {
+            "name":"public"
+        }
+    ]
+}
