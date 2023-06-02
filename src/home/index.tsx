@@ -18,7 +18,7 @@ import { toast } from "react-hot-toast"
 import MintedModal from "components/mintedModal"
 import axios from "axios"
 
-const LIGHTHOUSE_CONTRACT = "sei1jzzv6r5uckwd64n6qan3suzker0kct5w565f6529zjyumfcx96kqg9pfh2"
+const LIGHTHOUSE_CONTRACT = "sei13xt7vyffty38yads7nfe8ydysv3z82ege0ju8sf6sdk5c6aw99ds9xvjtx"
 
 var phaseTimer: any = {}
 var interval: any = null
@@ -277,7 +277,7 @@ const Home = () => {
 
         //load client
         const client = await getSigningCosmWasmClient(config.rpc, wallet.offlineSigner, {
-            gasPrice: new GasPrice(Decimal.fromUserInput("200000", 6), "usei"),
+            gasPrice: GasPrice.fromString("0.01usei")
         })
 
         let lighthouseConfig = await client.queryContractSmart(LIGHTHOUSE_CONTRACT, { get_config: {} })

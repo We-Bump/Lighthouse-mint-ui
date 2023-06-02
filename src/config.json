@@ -1,9 +1,9 @@
 {
     "name":"My Project",
     "description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu aliquet ultricies, urna elit aliquam nunc, quis aliquet nunc nisl quis nisl.",
-    "rpc":"http://127.0.0.1:26657/",
+    "rpc":"https://sei-testnet-2-rpc.brocha.in/",
     "network":"atlantic-2", 
-    "collection_address":"sei1tkzcnkln5fl8ytlcafcp9wdujw62hadwpn65c5lwz668275vlgys8tf88p", 
+    "collection_address":"", 
     "groups":[
         {
             "name":"whitelist",
