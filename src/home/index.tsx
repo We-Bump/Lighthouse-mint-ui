@@ -7,7 +7,8 @@ import Wallet, { DropdownItem } from "components/wallet"
 import { getSigningCosmWasmClient } from "@sei-js/core"
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCircleNotch } from "@fortawesome/free-solid-svg-icons"
+import { faDiscord, faTwitter } from '@fortawesome/free-brands-svg-icons'
+import { faCircleNotch, faGlobe } from "@fortawesome/free-solid-svg-icons"
 import BigNumber from "bignumber.js"
 import { Timer } from "components/timer"
 import { GasPrice } from "@cosmjs/stargate";
@@ -469,6 +470,24 @@ const Home = () => {
                                         </C.TotalMinted>
 
                                         <C.Description>{config.description}</C.Description>
+
+                                        <C.Links>
+                                            {config.website &&
+                                                <C.Link href={config.website} target="_blank" rel="noreferrer">
+                                                    <FontAwesomeIcon icon={faGlobe} />
+                                                </C.Link>
+                                            }
+                                            {config.twitter &&
+                                                <C.Link href={config.twitter} target="_blank" rel="noreferrer">
+                                                    <FontAwesomeIcon icon={faTwitter} />
+                                                </C.Link>
+                                            }
+                                            {config.discord &&
+                                                <C.Link href={config.discord} target="_blank" rel="noreferrer">
+                                                    <FontAwesomeIcon icon={faDiscord} />
+                                                </C.Link>
+                                            }
+                                        </C.Links>
 
                                         <C.Phases>
                                             {phases.map((phase, index) => (

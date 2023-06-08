@@ -240,6 +240,20 @@ export const Description = styled.div`
     margin-top:32px;
 `
 
+export const Links = styled.div`
+    display:flex;
+    gap: 1.2rem;
+    margin-top: 25px;
+`
+
+export const Link = styled.a`
+    color:${color.primary};
+    font-size: 25px;
+    &:hover{
+        opacity: 80%;
+    }
+`
+
 export const Phases = styled.div`
     margin-top:24px;
 `
