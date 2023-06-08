@@ -103,7 +103,7 @@ const Home = () => {
         const client = await SigningCosmWasmClient.connect(config.rpc)
 
         let balance = await client.getBalance(wallet!.accounts[0].address, "usei")
-        setBalance(new BigNumber(balance.amount).div(1e9).toString())
+        setBalance(new BigNumber(balance.amount).div(1e6).toString())
 
         client.queryContractSmart(LIGHTHOUSE_CONTRACT, { balance_of: { address: wallet!.accounts[0].address, collection: config.collection_address } }).then((result) => {
             setMyMintedNfts(result.mints)
@@ -293,7 +293,7 @@ const Home = () => {
         let lighthouseConfig = await client.queryContractSmart(LIGHTHOUSE_CONTRACT, { get_config: {} })
 
         //check if wallet have enough balance
-        if (currentPhase.unit_price > 0 && new BigNumber(currentPhase.unit_price).div(1e9).plus((new BigNumber(lighthouseConfig.fee).div(1e9))).times(amount).gt(new BigNumber(balance))) {
+        if (currentPhase.unit_price > 0 && new BigNumber(currentPhase.unit_price).div(1e6).plus((new BigNumber(lighthouseConfig.fee).div(1e6))).times(amount).gt(new BigNumber(balance))) {
             toast.error("Insufficient balance")
             return
         }
@@ -491,7 +491,7 @@ const Home = () => {
                                                         )}
                                                     </C.PhaseTop>
                                                     <C.PhaseBottom>
-                                                        {phase.max_tokens > 0 ? phase.max_tokens + ' Per Wallet •' : ''} {new BigNumber(phase.unit_price).div(1e9).toString()} SEI
+                                                        {phase.max_tokens > 0 ? phase.max_tokens + ' Per Wallet •' : ''} {new BigNumber(phase.unit_price).div(1e6).toString()} SEI
                                                     </C.PhaseBottom>
                                                     {(!phase.noend && new Date(phase.end_time) < new Date()) && (
                                                         <C.PhaseBadge>
@@ -512,7 +512,7 @@ const Home = () => {
                                         </C.Image>
                                         <C.MintInfo>
                                             <C.Price>
-                                                Price: <span>{new BigNumber(currentPhase.unit_price).div(1e9).times(amount).toString()} SEI</span>
+                                                Price: <span>{new BigNumber(currentPhase.unit_price).div(1e6).times(amount).toString()} SEI</span>
                                             </C.Price>
                                             <C.Amount>
                                                 <C.AmountButton onClick={decrementAmount}>
