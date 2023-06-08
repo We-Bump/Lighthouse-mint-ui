@@ -4,6 +4,7 @@
     "rpc":"https://sei-testnet-2-rpc.brocha.in/",
     "network":"atlantic-2", 
     "collection_address":"", 
+    "nft_name_type": "default",
     "groups":[
         {
             "name":"whitelist",

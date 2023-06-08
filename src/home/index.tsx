@@ -53,6 +53,10 @@ const Home = () => {
             refresh()
         }, 5000)
 
+        return () => {
+            clearInterval(interval)
+        }
+
     }, [wallet])
 
     useEffect(() => {
@@ -73,10 +77,12 @@ const Home = () => {
 
             for (let i = 0; i < config.groups.length; i++) {
                 for (let j = 0; j < result.mint_groups.length; j++) {
-                    if (config.groups[i].name.toLowerCase().trim() === result.mint_groups[j].name.toLowerCase().trim()) {
+                    let group = result.mint_groups[j]
+                    let groupConfig : any = config.groups[i]
+                    if (groupConfig.name.toLowerCase().trim() === group.name.toLowerCase().trim()) {
                         collectionData.phases.push({
-                            ...result.mint_groups[j],
-                            allowlist: config.groups[i].allowlist,
+                            ...group,
+                            allowlist: groupConfig.allowlist,
                         })
                     }
                 }
@@ -257,6 +263,11 @@ const Home = () => {
             return
         }
 
+        if (myMintedNfts.length + amount > currentPhase.max_tokens) {
+            toast.error("You can only mint " + currentPhase.max_tokens + " tokens per wallet")
+            return
+        }
+
         //check if amount is larger than remaining tokens
         if (amount > collection.supply - collection.mintedSupply) {
             toast.error("There are only " + (collection.supply - collection.mintedSupply) + " tokens left")
@@ -321,7 +332,6 @@ const Home = () => {
             instructions.push(instruction)
         }
 
-        console.log(instruction)
         let loading = toast.loading("Minting...")
         try {
 
@@ -329,9 +339,7 @@ const Home = () => {
             toast.dismiss(loading)
             toast.success("Minted successfully")
 
-            console.log(mintReceipt)
-
-
+            //console.log(mintReceipt)
 
             let tokenIds: any[] = [];
 
@@ -350,8 +358,6 @@ const Home = () => {
                     }
                 }
             }
-
-            console.log(tokenIds)
 
             refresh()
             refreshMyMintedNfts()
@@ -544,7 +550,7 @@ const Home = () => {
                                         {myMintedNftsData.map((mint: any) => (
                                             <C.Nft>
                                                 <C.NftImage src={`${mint.data.image}`}></C.NftImage>
-                                                <C.NftTitle>{mint.data.name}</C.NftTitle>
+                                                <C.NftTitle>{config.nft_name_type === "token_id" ? config.name + " #" + mint.mint  : mint.data.name}</C.NftTitle>
                                             </C.Nft>
                                         ))}
                                     </C.MintedNftsBody>
