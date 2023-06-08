@@ -32,3 +32,13 @@
         url("styles/fonts/Poppins-Light.ttf") format("truetype");
     font-weight: 300;
 }
+
+@font-face {
+    font-family: 'Marvin';
+    src: local('Marvin Round'), local('Marvin-Round'),
+        url('https://seilors.io/fonts/Marvin-Round.woff2') format('woff2'),
+        url('https://seilors.io/fonts/Marvin-Round.woff') format('woff'),
+        url('https://seilors.io/fonts/Marvin-Round.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }

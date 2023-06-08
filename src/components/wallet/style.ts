@@ -4,9 +4,10 @@ import { Hex2Rgba } from "utils/helpers"
 
 export const Wallet = styled.div`
     background-color:${color.primary};
-    padding:0px 16px;
+    padding-left:8px;
+    padding-right:14px;
     height:43px;
-    border-radius:8px;
+    border-radius:10px;
     font-size:14px;
     display:flex;
     align-items:center;
@@ -24,7 +25,7 @@ export const WBalance = styled.div`
     background-color:${color.secondaryLight};
     border-radius:8px;
     margin-right:16px;
-    font-size:12px;
+    font-size:14px;
 `
 
 export const WAddress = styled.div`

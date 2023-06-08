@@ -463,7 +463,7 @@ const Home = () => {
                                         <C.TotalMinted>
                                             <C.TotalMintedInfo>
                                                 <C.TotalMintedTitle>TOTAL MINTED</C.TotalMintedTitle>
-                                                <C.TotalMintedValue>{Math.floor((collection.mintedSupply / collection.supply * 100) * 100) / 100}% <span>{collection.mintedSupply}/{collection.supply}</span></C.TotalMintedValue>
+                                                <C.TotalMintedValue><span>{collection.mintedSupply}/{collection.supply}</span> ({Math.floor((collection.mintedSupply / collection.supply * 100) * 100) / 100}%)</C.TotalMintedValue>
                                             </C.TotalMintedInfo>
                                             <C.TotalMintedProgress value={Math.floor((collection.mintedSupply / collection.supply * 100) * 100) / 100}></C.TotalMintedProgress>
                                         </C.TotalMinted>
@@ -508,7 +508,7 @@ const Home = () => {
                                             {config.name}
                                         </C.TitleMobile>
                                         <C.Image>
-                                            <img src="/images/launch.png" alt="launch" />
+                                            <img src="https://arweave.net/OmtnV7hDcYX4LYmfUbUoWTcsfMkmKKAViSAxg_-nQqs" alt="launch" draggable="false" />
                                         </C.Image>
                                         <C.MintInfo>
                                             <C.Price>

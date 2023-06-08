@@ -1,18 +1,14 @@
 {
-    "name":"My Project",
-    "description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu aliquet ultricies, urna elit aliquam nunc, quis aliquet nunc nisl quis nisl.",
+    "name":"Testnet Seilors x WeBump",
+    "description":"Seilors testnet mint, powered by WeBump.",
+    "website": "https://seilors.io",
+    "twitter": "https://twitter.com/SeilorsNFT",
+    "discord": "https://discord.gg/seilors",
     "rpc":"https://sei-testnet-2-rpc.brocha.in/",
-    "network":"atlantic-2", 
-    "collection_address":"", 
-    "nft_name_type": "default",
+    "network":"atlantic-2",
+    "collection_address":"sei16z9xtgpexjflz5n2w9jfmgmz2d85g5ulfepp8d7v99xhmdx25muqzvu8cg",
+    "nft_name_type": "token_id",
     "groups":[
-        {
-            "name":"whitelist",
-            "allowlist":[
-                "sei14v72v7hgzuvgck6v6jsgjacxnt34gj06qnx53d",
-                "sei1t22vwusjlxg4vp7gttsx7n2y9u4k0vv9lpk2ge"
-            ] 
-        },
         {
             "name":"public"
         }

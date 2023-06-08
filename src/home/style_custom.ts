@@ -88,7 +88,7 @@ export const WalletConnected = styled.div`
     background-color:${color.primary};
     padding:8px 16px;
     border-radius:8px;
-    font-size:16px;
+    font-size:14px;
     display:flex;
     align-items:center;
 `
@@ -107,7 +107,7 @@ export const WAddress = styled.div`
 export const Launch = styled.div<{showMintedNfts?:string}>`
     margin-top:16px;
     min-height:769px;
-    background: linear-gradient(180deg, #15232D 0%, #0A141B 100%);
+    background: #c7384b;
     box-shadow: 0px 11.8109px 53.1492px rgba(0, 0, 0, 0.35);
     border-radius: 16px;
     padding:70px 56px;
@@ -204,6 +204,7 @@ export const TotalMinted = styled.div`
 export const TotalMintedInfo = styled.div`
     display:flex;
     justify-content:space-between;
+    gap: 1em;
 `
 
 export const TotalMintedTitle = styled.div`
@@ -220,7 +221,7 @@ export const TotalMintedProgress = styled.div<{value:number}>`
     margin-top:8px;
     border-radius:69px;
     height:12px;
-    background-color:#263039;
+    background-color:#ce4f5e;
     transition:all .3s ease-in-out;
     overflow:hidden;
     &:after{
@@ -236,7 +237,7 @@ export const TotalMintedProgress = styled.div<{value:number}>`
 
 export const Description = styled.div`
     color:${color.whiteShade};
-    font-size:18px;
+    font-size:14px;
     margin-top:32px;
 `
 
@@ -245,16 +246,18 @@ export const Phases = styled.div`
 `
 
 export const Phase = styled.div<{active:string,switch?:string}>`
-    background-color:${props => props.active === 'true' ? color.secondaryLight : color.secondary};
+    // background-color:${props => props.active === 'true' ? color.secondaryLight : color.secondary};
+    background-color: #ce4f5e;
     color:${props => props.active === 'true' ? color.white : color.whiteShade};
     position:relative;
     border-radius:8px;
-    border:${props => props.active === 'true' ? '1px solid'+color.primary : '1px solid'+color.secondaryLight};
+    // border:${props => props.active === 'true' ? '1px solid'+color.primary : '1px solid'+color.secondaryLight};
     padding:16px;
     display:flex;
     flex-direction:column;
     justify-content:center;
-    font-size:16px;
+    font-size:18px;
+    text-transform: capitalize;
 
     &:not(:last-child){
         margin-bottom:24px;
@@ -325,7 +328,7 @@ export const MintInfo = styled.div`
 `
 
 export const Price = styled.div`
-    color:${color.primary};
+    color:${color.whiteShade};
 
     & span{
         color:${color.white};
@@ -337,7 +340,7 @@ export const Amount = styled.div`
     display:flex;
     align-items:center;
     padding:8px;
-    background-color:${color.secondaryLight};
+    background-color:#ce4f5e;
     border-radius:8px;
 `
 
@@ -346,11 +349,11 @@ export const AmountButton = styled.div`
     height:24px;
     border-radius:8px;
     cursor:pointer;
-    color:${color.whiteShade};
+    color:#c7384b;
     display:flex;
     justify-content:center;
     align-items:center;
-    background-color:${color.secondary};
+    background-color:#fcedd6;
     transition:all .1s ease-in-out;
     &:hover{
         background-color:${Hex2Rgba(color.secondary, .8)};
@@ -412,7 +415,7 @@ export const MintButton = styled.button`
 export const MintedBalance = styled.div`
     text-align:center;
     margin-top:16px;
-    font-size:16px;
+    font-size:14px;
     color:${color.whiteShade};
     cursor:pointer;
 
