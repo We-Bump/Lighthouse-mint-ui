@@ -11,7 +11,6 @@ import { faCircleNotch } from "@fortawesome/free-solid-svg-icons"
 import BigNumber from "bignumber.js"
 import { Timer } from "components/timer"
 import { GasPrice } from "@cosmjs/stargate";
-import { Decimal } from "@cosmjs/math";
 import { keccak_256 } from '@noble/hashes/sha3'
 import { MerkleTree } from 'merkletreejs';
 import { toast } from "react-hot-toast"
@@ -263,7 +262,7 @@ const Home = () => {
             return
         }
 
-        if (myMintedNfts.length + amount > currentPhase.max_tokens) {
+        if (currentPhase.max_tokens > 0 && myMintedNfts.length + amount > currentPhase.max_tokens) {
             toast.error("You can only mint " + currentPhase.max_tokens + " tokens per wallet")
             return
         }
@@ -294,7 +293,7 @@ const Home = () => {
         let lighthouseConfig = await client.queryContractSmart(LIGHTHOUSE_CONTRACT, { get_config: {} })
 
         //check if wallet have enough balance
-        if (new BigNumber(currentPhase.unit_price).div(1e9).plus((new BigNumber(lighthouseConfig.fee).div(1e9))).times(amount).gt(new BigNumber(balance))) {
+        if (currentPhase.unit_price > 0 && new BigNumber(currentPhase.unit_price).div(1e9).plus((new BigNumber(lighthouseConfig.fee).div(1e9))).times(amount).gt(new BigNumber(balance))) {
             toast.error("Insufficient balance")
             return
         }
@@ -547,8 +546,8 @@ const Home = () => {
                                         <C.GoBack onClick={() => setShowMintedNfts(false)}>Back</C.GoBack>
                                     </C.MintedNftsHeader>
                                     <C.MintedNftsBody>
-                                        {myMintedNftsData.map((mint: any) => (
-                                            <C.Nft>
+                                        {myMintedNftsData.map((mint: any, i:any) => (
+                                            <C.Nft key={i}>
                                                 <C.NftImage src={`${mint.data.image}`}></C.NftImage>
                                                 <C.NftTitle>{config.nft_name_type === "token_id" ? config.name + " #" + mint.mint  : mint.data.name}</C.NftTitle>
                                             </C.Nft>
