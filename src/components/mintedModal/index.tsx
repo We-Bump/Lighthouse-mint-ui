@@ -72,7 +72,7 @@ const MintedModal = (props: any) => {
                             Mint Successful!
                         </C.Title>
                         
-                        <C.Button onClick={()=> window.open("https://twitter.com/intent/tweet?text=I%20just%20minted%20%40SeilorsNFT%20%F0%9F%9A%A2%20on%20%24SEI%20testnet%2C%20powered%20by%20%40WeBump_%20%F0%9F%9F%A7%F0%9F%9F%A9%F0%9F%9F%AA%F0%9F%9F%A8%0A%0AReady%20to%20set%20sail%3F%20Get%20yours%20here%20%F0%9F%91%89%20https%3A%2F%2Ftestnet.seilors.io", "_blank")}>
+                        <C.Button onClick={()=> window.open("https://twitter.com/intent/tweet?text=I%20just%20minted%20%40SeilorsNFT%20%F0%9F%9A%A2%20on%20%24SEI%20testnet%2C%20powered%20by%20%40WeBump_%20%F0%9F%9F%A7%F0%9F%9F%A9%F0%9F%9F%AA%F0%9F%9F%A8%0A%0AReady%20to%20set%20sail%3F%20Get%20yours%20here%20%F0%9F%91%89%20https%3A%2F%2Ftestnet.seilors.io%0A%0Apic.twitter.com%2FTpnqRQVBFc", "_blank")}>
                             Tweet it!
                         </C.Button>
 

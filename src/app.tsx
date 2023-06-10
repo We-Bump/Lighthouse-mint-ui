@@ -5,6 +5,7 @@ import { WalletConnectProvider } from "hooks/walletConnect"
 import { Toaster } from "react-hot-toast";
 import { color } from "styles/theme";
 import { Hex2Rgba } from "utils/helpers";
+import { Analytics } from '@vercel/analytics/react'
 
 const App = () => {
 
@@ -27,6 +28,7 @@ const App = () => {
                     },
                 }}
             />
+            <Analytics />
         </WalletConnectProvider>
     )
 

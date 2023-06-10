@@ -353,6 +353,7 @@ export const Amount = styled.div`
     padding:8px;
     background-color:${color.secondaryLight};
     border-radius:8px;
+    pointer-events: none;
 `
 
 export const AmountButton = styled.div`
@@ -373,6 +374,7 @@ export const AmountButton = styled.div`
         background-color:${Hex2Rgba(color.secondary, .5)};
     }
     user-select:none;
+    pointer-events: none;
 `
 
 export const AmountValue = styled.input`
