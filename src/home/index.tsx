@@ -7,7 +7,8 @@ import Wallet, { DropdownItem } from "components/wallet"
 import { getSigningCosmWasmClient } from "@sei-js/core"
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCircleNotch } from "@fortawesome/free-solid-svg-icons"
+import { faDiscord, faTwitter } from '@fortawesome/free-brands-svg-icons'
+import { faCircleNotch, faGlobe } from "@fortawesome/free-solid-svg-icons"
 import BigNumber from "bignumber.js"
 import { Timer } from "components/timer"
 import { GasPrice } from "@cosmjs/stargate";
@@ -17,7 +18,7 @@ import { toast } from "react-hot-toast"
 import MintedModal from "components/mintedModal"
 import axios from "axios"
 
-const LIGHTHOUSE_CONTRACT = "sei13xt7vyffty38yads7nfe8ydysv3z82ege0ju8sf6sdk5c6aw99ds9xvjtx"
+const LIGHTHOUSE_CONTRACT = "sei1tae8sxwht8zh5pfd2ac2l6ex97rk4jkd23gw5sczgjxgey9lduusptyaqn"
 
 var phaseTimer: any = {}
 var interval: any = null
@@ -77,7 +78,7 @@ const Home = () => {
             for (let i = 0; i < config.groups.length; i++) {
                 for (let j = 0; j < result.mint_groups.length; j++) {
                     let group = result.mint_groups[j]
-                    let groupConfig : any = config.groups[i]
+                    let groupConfig: any = config.groups[i]
                     if (groupConfig.name.toLowerCase().trim() === group.name.toLowerCase().trim()) {
                         collectionData.phases.push({
                             ...group,
@@ -230,7 +231,7 @@ const Home = () => {
 
         setCurrentPhase(phase)
         manageWhitelist(phase)
-        phaseSwitch= true
+        phaseSwitch = true
     }
 
     const incrementAmount = () => {
@@ -369,7 +370,7 @@ const Home = () => {
                 setShowMintedModal(true)
                 console.log(e)
             })
-        } catch (e:any) {
+        } catch (e: any) {
             toast.dismiss(loading)
             if (e.message !== "Transaction declined")
                 toast.error("Mint failed")
@@ -470,6 +471,26 @@ const Home = () => {
 
                                         <C.Description>{config.description}</C.Description>
 
+                                        {(config.website || config.twitter || config.discord) && (
+                                            <C.Links>
+                                                {config.website &&
+                                                    <C.Link href={config.website} target="_blank" rel="noreferrer">
+                                                        <FontAwesomeIcon icon={faGlobe} />
+                                                    </C.Link>
+                                                }
+                                                {config.twitter &&
+                                                    <C.Link href={config.twitter} target="_blank" rel="noreferrer">
+                                                        <FontAwesomeIcon icon={faTwitter} />
+                                                    </C.Link>
+                                                }
+                                                {config.discord &&
+                                                    <C.Link href={config.discord} target="_blank" rel="noreferrer">
+                                                        <FontAwesomeIcon icon={faDiscord} />
+                                                    </C.Link>
+                                                }
+                                            </C.Links>
+                                        )}
+
                                         <C.Phases>
                                             {phases.map((phase, index) => (
                                                 <C.Phase key={index} active={currentPhase.name === phase.name ? "true" : "false"} switch={!(!phase.noend && new Date(phase.end_time) < new Date()) ? "true" : "false"} onClick={() => switchPhase(phase)}>
@@ -546,10 +567,10 @@ const Home = () => {
                                         <C.GoBack onClick={() => setShowMintedNfts(false)}>Back</C.GoBack>
                                     </C.MintedNftsHeader>
                                     <C.MintedNftsBody>
-                                        {myMintedNftsData.map((mint: any, i:any) => (
+                                        {myMintedNftsData.map((mint: any, i: any) => (
                                             <C.Nft key={i}>
                                                 <C.NftImage src={`${mint.data.image}`}></C.NftImage>
-                                                <C.NftTitle>{config.nft_name_type === "token_id" ? config.name + " #" + mint.mint  : mint.data.name}</C.NftTitle>
+                                                <C.NftTitle>{config.nft_name_type === "token_id" ? config.name + " #" + mint.mint : mint.data.name}</C.NftTitle>
                                             </C.Nft>
                                         ))}
                                     </C.MintedNftsBody>

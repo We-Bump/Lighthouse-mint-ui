@@ -1,6 +1,9 @@
 {
     "name":"My Project",
     "description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu aliquet ultricies, urna elit aliquam nunc, quis aliquet nunc nisl quis nisl.",
+    "website":"",
+    "twitter":"",
+    "discord":"",
     "rpc":"https://sei-testnet-2-rpc.brocha.in/",
     "network":"atlantic-2", 
     "collection_address":"", 
