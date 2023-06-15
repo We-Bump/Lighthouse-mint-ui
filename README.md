@@ -33,7 +33,7 @@ $ npm run build
 ## Configuration
 
 UI relies on `src/config.json` file for configuration of launch.
-```json
+```json5
 {
 	"name":"My Project",
 	"description":"",
@@ -43,6 +43,7 @@ UI relies on `src/config.json` file for configuration of launch.
 	"rpc":"http://127.0.0.1:26657/",
 	"network":"atlantic-2",
 	"collection_address":"sei1tkzcnkln5fl8ytlcafcp9wdujw62hadwpn65c5lwz668275vlgys8tf88p",
+	"nft_name_type":"default",
 	"groups":[
 		{
 			"name":"whitelist",
@@ -68,6 +69,8 @@ UI relies on `src/config.json` file for configuration of launch.
 `collection_address` - collection address to load
 
 `groups` - list of mint groups to display in the ui
+
+`nft_name_type` - type of minted nfts name to display in ui. available (default, token_id)
 
 ##### group options
 `name` - group name
