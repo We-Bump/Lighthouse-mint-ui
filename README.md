@@ -33,13 +33,13 @@ $ npm run build
 ## Configuration
 
 UI relies on `src/config.json` file for configuration of launch.
-```json5
+```json
 {
 	"name":"My Project",
 	"description":"",
 	"website":"",
-    "twitter":"",
-    "discord":"",
+	"twitter":"",
+	"discord":"",
 	"rpc":"http://127.0.0.1:26657/",
 	"network":"atlantic-2",
 	"collection_address":"sei1tkzcnkln5fl8ytlcafcp9wdujw62hadwpn65c5lwz668275vlgys8tf88p",
