@@ -18,7 +18,7 @@ import { toast } from "react-hot-toast"
 import MintedModal from "components/mintedModal"
 import axios from "axios"
 
-const LIGHTHOUSE_CONTRACT = "sei1tae8sxwht8zh5pfd2ac2l6ex97rk4jkd23gw5sczgjxgey9lduusptyaqn"
+const LIGHTHOUSE_CONTRACT = "sei15j7am0d65y55ufd0xr9nnd6pyhg0q65qx2c98h3nz5repln9gxks8urz69"
 
 var phaseTimer: any = {}
 var interval: any = null
@@ -69,7 +69,7 @@ const Home = () => {
             //console.log(result)
             let collectionData: any = {
                 supply: result.supply,
-                mintedSupply: result.next_token_id,
+                mintedSupply: result.next_token_id - result.start_order,
                 phases: [],
                 tokenUri: result.token_uri,
                 name: result.name,
