@@ -64,7 +64,7 @@ UI relies on `src/config.json` file for configuration of launch.
 
 `rpc` - SEI rpc to interact with blockchain
 
-`network` - network to connect- available (atlantic-2)
+`network` - network to connect- available (atlantic-2) (pacific-1)
 
 `collection_address` - collection address to load
 

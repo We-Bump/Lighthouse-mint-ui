@@ -46,8 +46,8 @@ const MintedModal = (props: any) => {
 
                     {props.mints.length > 1 && (
                         <C.Nfts>
-                            {props.mints.map((mint: any) => (
-                                <C.Nft>
+                            {props.mints.map((mint: any, i:number) => (
+                                <C.Nft key={i}>
                                     <C.NftImage src={typeof mint.data === "undefined" ? `${props.tokenUri}/${mint}` : mint.data.image}></C.NftImage>
                                     <C.NftTitle>
                                         {config.nft_name_type === "default" && (

@@ -18,7 +18,20 @@ import { toast } from "react-hot-toast"
 import MintedModal from "components/mintedModal"
 import axios from "axios"
 
-const LIGHTHOUSE_CONTRACT = "sei1daj8pj34e7n58w45av8qt8y30hkcq2lqav0sqz4pva9twh5a2nyq9m6zq7"
+const LIGHTHOUSE_CONTRACT_ATLANTIC_2 = "sei12gjnfdh2kz06qg6e4y997jfgpat6xpv9dw58gtzn6g75ysy8yt5snzf4ac"
+const LIGHTHOUSE_CONTRACT_PACIFIC_1 = "sei1hjsqrfdg2hvwl3gacg4fkznurf36usrv7rkzkyh29wz3guuzeh0snslz7d"
+
+const getLighthouseContract = (network: string) => {
+    if (network === "pacific-1") {
+        return LIGHTHOUSE_CONTRACT_PACIFIC_1;
+    } else if (network === "atlantic-2") {
+        return LIGHTHOUSE_CONTRACT_ATLANTIC_2;
+    } else if (network === "sei-chain") {
+        return "sei1j5uc8aly825mnjl0napky8nxnnkmcqpl2lx8dud29xyhw2dmr24s6lquut"
+    } else {
+        throw new Error("Invalid network");
+    }
+}
 
 var phaseTimer: any = {}
 var interval: any = null
@@ -65,7 +78,7 @@ const Home = () => {
 
     const refresh = async () => {
         const client = await SigningCosmWasmClient.connect(config.rpc)
-        client.queryContractSmart(LIGHTHOUSE_CONTRACT, { get_collection: { collection: config.collection_address } }).then((result) => {
+        client.queryContractSmart(getLighthouseContract(config.network), { get_collection: { collection: config.collection_address } }).then((result) => {
             //console.log(result)
             let collectionData: any = {
                 supply: result.supply,
@@ -74,7 +87,8 @@ const Home = () => {
                 tokenUri: result.token_uri,
                 name: result.name,
                 hidden_metadata: result.hidden_metadata,
-                placeholder_token_uri: result.placeholder_token_uri
+                placeholder_token_uri: result.placeholder_token_uri,
+                iterated_uri: result.iterated_uri,
             }
 
             for (let i = 0; i < config.groups.length; i++) {
@@ -108,7 +122,7 @@ const Home = () => {
         let balance = await client.getBalance(wallet!.accounts[0].address, "usei")
         setBalance(new BigNumber(balance.amount).div(1e6).toString())
 
-        client.queryContractSmart(LIGHTHOUSE_CONTRACT, { balance_of: { address: wallet!.accounts[0].address, collection: config.collection_address } }).then((result) => {
+        client.queryContractSmart(getLighthouseContract(config.network), { balance_of: { address: wallet!.accounts[0].address, collection: config.collection_address } }).then((result) => {
             setMyMintedNfts(result.mints)
 
             client.disconnect()
@@ -293,7 +307,7 @@ const Home = () => {
             gasPrice: GasPrice.fromString("0.01usei")
         })
 
-        let lighthouseConfig = await client.queryContractSmart(LIGHTHOUSE_CONTRACT, { get_config: {} })
+        let lighthouseConfig = await client.queryContractSmart(getLighthouseContract(config.network), { get_config: {} })
 
         //check if wallet have enough balance
         if (currentPhase.unit_price > 0 && new BigNumber(currentPhase.unit_price).div(1e6).plus((new BigNumber(lighthouseConfig.fee).div(1e6))).times(amount).gt(new BigNumber(balance))) {
@@ -312,7 +326,7 @@ const Home = () => {
         }
 
         const instruction: any = {
-            contractAddress: LIGHTHOUSE_CONTRACT,
+            contractAddress: getLighthouseContract(config.network),
             msg: {
                 mint_native: {
                     collection: config.collection_address,
@@ -321,12 +335,17 @@ const Home = () => {
                     merkle_proof: merkleProof,
                     hashed_address: hashedAddress
                 }
-            },
-            funds: [{
+            }
+        }
+
+
+        if (currentPhase.unit_price != 0) {
+            instruction.funds = [{
                 denom: 'usei',
                 amount: new BigNumber(currentPhase.unit_price).plus(new BigNumber(lighthouseConfig.fee)).toString()
             }]
         }
+
 
         let instructions = []
 
@@ -385,40 +404,55 @@ const Home = () => {
         let promises: any[] = []
 
         if (!collection.hidden_metadata) {
-            for (let i = 0; i < mints.length; i++) {
-                promises.push(axios.get(`${collection.tokenUri}/${mints[i]}`).then((response) => response.data))
-            }
+            if (!collection.iterated_uri) {
+                for (let i = 0; i < mints.length; i++) {
+                    promises.push(axios.get(`${collection.tokenUri}/${mints[i]}`).then((response) => response.data))
+                }
 
-            Promise.all(promises).then((results) => {
-                //merge with myMintedNfts
-                mints.forEach((mint: any, index: number) => {
-                    metadata.push({
-                        mint: mint,
-                        data: results[index]
+                Promise.all(promises).then((results) => {
+                    //merge with myMintedNfts
+                    mints.forEach((mint: any, index: number) => {
+                        metadata.push({
+                            mint: mint,
+                            data: results[index]
+                        })
                     })
-                })
 
-                resolve(metadata)
-            }).catch((e) => {
-                reject(e)
-            })
-        } else {
-                
-                let placeholder_metadata = await axios.get(collection.placeholder_token_uri).then((response) => response.data)
-    
+                    resolve(metadata)
+                }).catch((e) => {
+                    reject(e)
+                })
+            }else {
+                let tokenurimetadata = await axios.get(collection.tokenUri).then((response) => response.data)
+
                 for (let i = 0; i < mints.length; i++) {
                     metadata.push({
                         mint: mints[i],
                         data: {
-                            ...placeholder_metadata,
+                            ...tokenurimetadata,
                             name: collection.name + " #" + mints[i],
                         }
                     })
                 }
-
-                console.log(metadata)
     
                 resolve(metadata)
+
+            }
+        } else {
+
+            let placeholder_metadata = await axios.get(collection.placeholder_token_uri).then((response) => response.data)
+
+            for (let i = 0; i < mints.length; i++) {
+                metadata.push({
+                    mint: mints[i],
+                    data: {
+                        ...placeholder_metadata,
+                        name: collection.name + " #" + mints[i],
+                    }
+                })
+            }
+
+            resolve(metadata)
         }
     })
 
@@ -431,23 +465,40 @@ const Home = () => {
         let promises: any[] = []
 
         if (!collection.hidden_metadata) {
-            for (let i = 0; i < myMintedNfts.length; i++) {
-                promises.push(axios.get(`${collection.tokenUri}/${myMintedNfts[i]}`).then((response) => response.data))
-            }
+            if (!collection.iterated_uri) {
+                for (let i = 0; i < myMintedNfts.length; i++) {
+                    promises.push(axios.get(`${collection.tokenUri}/${myMintedNfts[i]}`).then((response) => response.data))
+                }
 
-            Promise.all(promises).then((results) => {
-                //merge with myMintedNfts
-                myMintedNfts.forEach((mint: any, index: number) => {
-                    metadata.push({
-                        mint: mint,
-                        data: results[index]
+                Promise.all(promises).then((results) => {
+                    //merge with myMintedNfts
+                    myMintedNfts.forEach((mint: any, index: number) => {
+                        metadata.push({
+                            mint: mint,
+                            data: results[index]
+                        })
                     })
+
+                    setMyMintedNftsData(metadata)
+                }).finally(() => {
+                    setLoading(false)
                 })
+            } else {
+                let tokenurimetadata = await axios.get(collection.tokenUri).then((response) => response.data)
+
+                for (let i = 0; i < myMintedNfts.length; i++) {
+                    metadata.push({
+                        mint: myMintedNfts[i],
+                        data: {
+                            ...tokenurimetadata,
+                            name: collection.name + " #" + myMintedNfts[i],
+                        }
+                    })
+                }
 
                 setMyMintedNftsData(metadata)
-            }).finally(() => {
                 setLoading(false)
-            })
+            }
         } else {
 
             let placeholder_metadata = await axios.get(collection.placeholder_token_uri).then((response) => response.data)

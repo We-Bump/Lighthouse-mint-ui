@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import * as C from "./style"
 import { connect, WalletConnect } from '@sei-js/core'
 import { Transition } from 'react-transition-group'
@@ -27,6 +27,24 @@ const WalletConnectProvider = ({ children }: any) => {
             console.log(err)
         })
     }
+
+    /*useEffect(() => {
+        // Check if user is previously connected
+        const storedWallet = localStorage.getItem("wallet");
+        if (storedWallet) {
+            const parsedWallet: WalletConnect = JSON.parse(storedWallet);
+            setWallet(parsedWallet);
+        }
+    }, []);*/
+    
+    useEffect(() => {
+        /*// Save wallet to localStorage on connection
+        if (wallet) {
+            localStorage.setItem("wallet", JSON.stringify(wallet));
+        } else {
+            localStorage.removeItem("wallet");
+        }*/
+    }, [wallet]);
 
     const disconnectWallet = () => {
         setWallet(null)
