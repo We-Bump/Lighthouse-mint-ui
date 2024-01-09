@@ -279,11 +279,6 @@ const Home = () => {
             return
         }
 
-        if (currentPhase.max_tokens > 0 && myMintedNfts.length + amount > currentPhase.max_tokens) {
-            toast.error("You can only mint " + currentPhase.max_tokens + " tokens per wallet")
-            return
-        }
-
         //check if amount is larger than remaining tokens
         if (amount > collection.supply - collection.mintedSupply) {
             toast.error("There are only " + (collection.supply - collection.mintedSupply) + " tokens left")
@@ -393,9 +388,13 @@ const Home = () => {
             })
         } catch (e: any) {
             toast.dismiss(loading)
-            if (e.message !== "Transaction declined")
+            if (e.message.includes("Max Tokens Minted"))
+                toast.error("You can only mint " + currentPhase.max_tokens + " tokens per wallet for this phase")
+            else if (e.message !== "Transaction declined")
                 toast.error("Mint failed")
+            
             console.log(e)
+           
         }
     }
 
