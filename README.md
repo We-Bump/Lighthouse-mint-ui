@@ -14,7 +14,7 @@ From your command line:
 $ git clone https://github.com/We-Bump/Lighthouse-mint-ui
 
 # Go into the repository
-$ cd Lighthouse-launch-ui
+$ cd Lighthouse-mint-ui
 
 # Install dependencies
 $ npm install
