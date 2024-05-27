@@ -3,18 +3,21 @@ import * as C from "./style"
 import { connect, WalletConnect } from '@sei-js/core'
 import { Transition } from 'react-transition-group'
 import config from "../../config.json"
+import { StdSignature } from '@cosmjs/amino';
 
 const WalletConnectContext = React.createContext({
     isModalOpen: false,
     openWalletConnect: () => { },
     closeWalletConnect: () => { },
     wallet: null as WalletConnect | null,
-    disconnectWallet: () => { }
+    disconnectWallet: () => { },
+    signMessage: async (message: string) => { return Promise.resolve(null) as Promise<StdSignature | null> }
 })
 
 const WalletConnectProvider = ({ children }: any) => {
     const [isModalOpen, setIsModalOpen] = React.useState(false)
     const [wallet, setWallet] = React.useState<WalletConnect | null>(null)
+    const [walletType, setWalletType] = React.useState("")
 
     const openWalletConnect = () => setIsModalOpen(true)
     const closeWalletConnect = () => setIsModalOpen(false)
@@ -22,36 +25,57 @@ const WalletConnectProvider = ({ children }: any) => {
     const connectWallet = (name: any) => {
         connect(name, config.network).then((wallet: WalletConnect) => {
             setWallet(wallet)
+            setWalletType(name)
             closeWalletConnect()
+            localStorage.setItem("lastConnectedWallet", name)
         }).catch((err: any) => {
             console.log(err)
+            localStorage.removeItem("lastConnectedWallet")
         })
     }
 
-    /*useEffect(() => {
-        // Check if user is previously connected
-        const storedWallet = localStorage.getItem("wallet");
-        if (storedWallet) {
-            const parsedWallet: WalletConnect = JSON.parse(storedWallet);
-            setWallet(parsedWallet);
-        }
-    }, []);*/
-    
     useEffect(() => {
-        /*// Save wallet to localStorage on connection
-        if (wallet) {
-            localStorage.setItem("wallet", JSON.stringify(wallet));
-        } else {
-            localStorage.removeItem("wallet");
-        }*/
-    }, [wallet]);
+        const lastConnectedWallet = localStorage.getItem("lastConnectedWallet")
+        if (lastConnectedWallet) {
+            connectWallet(lastConnectedWallet)
+        }
+    }, [])
 
     const disconnectWallet = () => {
         setWallet(null)
+        localStorage.removeItem("lastConnectedWallet")
     }
 
+    const signMessage = async (message: string) => {
+        if (!wallet) {
+            return null
+        }
+
+        try {
+
+            if (walletType === "compass") {
+                let sign = await window.compass!.signArbitrary("pacific-1", wallet!.accounts[0].address, message)
+                return sign
+            } else if (walletType === "fin") {
+                let sign = await window.fin!.signArbitrary("pacific-1", wallet!.accounts[0].address, message)
+                return sign
+            } else if (walletType === "leap") {
+                let sign = await window.leap!.signArbitrary("pacific-1", wallet!.accounts[0].address, message)
+                return sign
+            } else if (walletType === "keplr") {
+                let sign = await window.keplr!.signArbitrary("pacific-1", wallet!.accounts[0].address, message)
+                return sign
+            }
+
+            return null
+        } catch (err) {
+            return null
+        }
+    }
+
+
     return (
-        <WalletConnectContext.Provider value={{ isModalOpen, openWalletConnect, closeWalletConnect, wallet, disconnectWallet }}>
+        <WalletConnectContext.Provider value={{ isModalOpen, openWalletConnect, closeWalletConnect, wallet, disconnectWallet, signMessage }}>
             {children}
             <WalletConnectModal connectWallet={connectWallet} />
         </WalletConnectContext.Provider>
@@ -59,8 +83,8 @@ const WalletConnectProvider = ({ children }: any) => {
 }
 
 const wallets = [
-    ["leap", require("./assets/leap.png")], ["keplr", require("./assets/keplr.png")], ["fin", require("./assets/fin.png")],
-    ["compass", require("./assets/compass.png")], ["falcon", require("./assets/falcon.png")], ["coin98", require("./assets/coin98.png")]
+    ["compass", require("./assets/compass.png")], ["leap", require("./assets/leap.png")], ["keplr", require("./assets/keplr.png")],
+    ["fin", require("./assets/fin.png")], ["falcon", require("./assets/falcon.png")], ["coin98", require("./assets/coin98.png")]
 ]
 
 const WalletConnectModal = ({ connectWallet }: any) => {
@@ -109,8 +133,8 @@ const WalletConnectModal = ({ connectWallet }: any) => {
 }
 
 const useWalletConnect = () => {
-    const { isModalOpen, openWalletConnect, closeWalletConnect, wallet, disconnectWallet } = useContext(WalletConnectContext)
-    return { isModalOpen, openWalletConnect, closeWalletConnect, wallet, disconnectWallet }
+    const { isModalOpen, openWalletConnect, closeWalletConnect, wallet, disconnectWallet, signMessage } = useContext(WalletConnectContext)
+    return { isModalOpen, openWalletConnect, closeWalletConnect, wallet, disconnectWallet, signMessage }
 }
 
 export { WalletConnectProvider, useWalletConnect }

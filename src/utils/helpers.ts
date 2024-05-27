@@ -5,13 +5,20 @@ export const Hex2Rgba = (hex: string, alpha: number) => {
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-export const shortenPublicKey = (publicKey: string, len?: number) => {
+export const shortenPublicKey = (publicKey: string, len: number=5) => {
+    if (!publicKey) return publicKey; 
     try {
-        if (len) {
-            return publicKey.slice(0, len)
-        }
-        return publicKey.slice(0, 5) + "..." + publicKey.slice(-5);
+        return publicKey.slice(0, len) + "..." + publicKey.slice(-len);
     } catch (e) {
         return publicKey;
     }
+}
+
+export const formatNumber = (number:any) => {
+    const formatter = new Intl.NumberFormat('en-US', {
+        minimumFractionDigits: 0, 
+        maximumFractionDigits: 20, 
+    });
+
+    return formatter.format(number);
 }

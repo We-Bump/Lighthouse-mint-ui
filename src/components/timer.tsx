@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 
-//props: {startdate: string, enddate: string}
+
+var interval : any
+
 export const Timer = (props : any) => {
     const [days, setDays] = useState(0)
     const [hours, setHours] = useState(0)
@@ -26,10 +28,18 @@ export const Timer = (props : any) => {
     }
 
     React.useEffect(() => {
+
+        interval = setInterval(start, 1000)
+
         start()
+
+        return () => {
+            clearInterval(interval)
+        }
+        
     }, [])
 
-    setInterval(start, 1000)
+    
 
     return (
         <>

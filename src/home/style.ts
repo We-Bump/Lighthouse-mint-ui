@@ -180,17 +180,31 @@ export const LaunchInfo = styled.div`
 export const Title = styled.div`
     font-size:32px;
     font-weight:500;
-
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
     @media (max-width: 768px) {
         display:none;
     }
+`
+
+export const CollectionType = styled.div`
+    padding:4px 8px;
+    background-color:${color.secondaryLight};
+    border-radius:8px;
+    font-size:14px;
+    margin-left:8px;
+    font-weight:400;
+    white-space:nowrap;
 `
 
 export const TitleMobile = styled.div`
     display:none;
 
     @media (max-width: 768px) {
-        display:block;
+        display:flex;
+        align-items:center;
+        flex-wrap:wrap;
         font-size:32px;
         font-weight:500;
         margin-bottom:16px;
@@ -296,6 +310,12 @@ export const PhaseTop = styled.div`
 
 export const PhaseTitle = styled.div`
     color:${color.primary};
+    display:flex;
+`
+
+export const PhaseReserved = styled.div`
+    color:${color.primary};
+    margin-left:4px;
 `
 
 export const PhaseDate = styled.div`
@@ -305,7 +325,42 @@ export const PhaseDate = styled.div`
 `
 
 export const PhaseBottom = styled.div`
+    display:flex;
+    flex-wrap:wrap;
+    & span{
+        white-space:nowrap;
+        display:flex;
+        flex-wrap:no-wrap;
+        align-items:center;
+    }
+    & span:not(:last-child){
+        margin-right:4px;
+    }
+`
 
+export const PhaseRatio = styled.div`
+    margin-top:8px;
+    font-size:12px;
+    color:#ACB4CF;
+
+    & span{
+        font-weight:500;
+    }
+`
+
+export const PhaseBurn = styled.div`
+    display:inline-flex;    
+    background-color:${color.secondary};
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    align-items:center;
+    justify-content:center;
+    margin-right:4px;
+    & svg{
+        height:10px;
+        color:${color.red};
+    }
 `
 
 export const PhaseBadge = styled.div`
@@ -335,16 +390,79 @@ export const Image = styled.div`
 export const MintInfo = styled.div`
     display:flex;
     justify-content:space-between;
-    align-items:center;
-    margin-top:24px;
+    align-items:flex-start;
+    margin-top:16px;
 `
 
 export const Price = styled.div`
-    color:${color.whiteShade};
+    color:${color.primary};
+
+`
+
+export const PriceText = styled.div`
+    height:20px;
+    display:flex;
+    align-items:center;
+`
+
+export const Ratio = styled.div`
+    margin-left:8px;
+    color:#ACB4CF;
+    font-size:12px;
 
     & span{
-        color:${color.white};
         font-weight:500;
+    }
+`
+
+export const Prices = styled.div`
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+`
+
+export const PriceItem = styled.div`
+    display:flex;
+    padding: 6px;
+    border-radius:8px;
+    border:1px solid #263039;
+    color:${color.white};
+    font-weight:500;
+    margin-top:8px;
+    & span{
+        color:${color.whiteShade};
+        margin-left:4px;
+    }
+`
+
+export const PriceItemBurn = styled.div`
+    display:inline-flex;    
+    background-color:${color.secondaryLight};
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    align-items:center;
+    justify-content:center;
+    margin-right:4px;
+    & svg{
+        height:16px;
+        color:${color.red};
+    }
+`
+
+export const PriceItemSeperator = styled.div`
+    margin:0 8px;
+    font-weight:300;
+    margin-top:8px;
+`
+
+export const AmountWrapper = styled.div`
+    display:flex;
+    align-items:center;
+
+    & > span{
+        color:${color.whiteShade};
+        margin-right:8px;
     }
 `
 
@@ -395,7 +513,7 @@ export const AmountValue = styled.input`
       
 `
 
-export const MintButton = styled.button`
+export const MintButton = styled.button<{$haveToken?:boolean}>`
     width:100%;
     padding:16px 0;
     border-radius:8px;
@@ -422,6 +540,42 @@ export const MintButton = styled.button`
         border:none;
         background-color:${Hex2Rgba(color.primary, .5)};
     }
+
+    ${props => props.$haveToken && `
+        border-bottom-left-radius:0;
+        border-bottom-right-radius:0;
+    `}
+`
+
+export const TokenBalances = styled.div`
+    border:1px solid ${color.primary};
+    border-bottom-left-radius:8px;
+    border-bottom-right-radius:8px;
+    padding:16px;
+`
+
+export const TokenBalancesTitle = styled.div`
+    color:${color.primary};
+    font-size:14px;
+`
+
+export const TokenBalancesList = styled.div`
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+`
+
+export const TokenBalance = styled.div`
+    margin-top:8px;
+    color:${color.primary};
+    font-size:14px;
+    font-weight:500;
+    & span{
+        font-weight:400;
+        color:${color.whiteShade};
+    }
+    position:relative;
+    margin-right:8px;
 `
 
 export const MintedBalance = styled.div`
@@ -434,6 +588,17 @@ export const MintedBalance = styled.div`
     &:hover{
         color:${color.primary};
     }
+`
+
+export const MintedTokenBalance = styled.div`
+text-align:center;
+margin-top:16px;
+font-size:14px;
+color:${color.whiteShade};
+
+&:hover{
+    color:${color.primary};
+}
 `
 
 export const MintedNfts = styled.div`
@@ -501,4 +666,36 @@ export const NftImage = styled.img`
 
 export const NftTitle = styled.div`
     margin-left:16px;
+`
+
+export const CA = styled.div`
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:16px;
+`
+
+export const CaTitle = styled.div`
+    color:${color.primary};
+    font-size:14px;
+`
+
+export const CaValues = styled.div`
+    display:flex;
+`
+
+export const CaValue = styled.div`
+    font-size:14px;
+    cursor:pointer;
+    &:hover{
+        color:${color.primary};
+    }
+    & svg{
+        
+        margin-left:8px;
+    }
+
+    &:not(:last-child){
+        margin-right:16px;
+    }
 `

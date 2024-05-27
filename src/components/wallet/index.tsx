@@ -34,7 +34,11 @@ const DropdownButton = (props: any) => {
         <C.DropdownButton text={props.text} customIcon={props.icon} ref={dropdownRef} onClick={openDropdown} dropdownOpen={dropdownOpen}>
             <C.Wallet>
                     <C.WBalance>{props.balance}</C.WBalance>
-                    <C.WAddress>{shortenPublicKey(props.address)}</C.WAddress>
+                    <C.WAddresses>
+                        <C.WAddress>{shortenPublicKey(props.bech32Address)}</C.WAddress>
+                        <C.WAddress>{shortenPublicKey(props.evmAddress)}</C.WAddress>
+                    </C.WAddresses>
+                    
             </C.Wallet>
         
             <C.DropdownButtonContent side={props.side} mobileSide={props.mobileSide} onClick={() => setDropdownOpen(false)}>

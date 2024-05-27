@@ -3,6 +3,7 @@
 
 Lighthouse mint ui is a launch pad for launching NFT collections created by [Lighthouse cli](https://github.com/We-Bump/Lighthouse-cli).
 
+See the [documentation](https://webump.xyz) for usage and installation instructions.
 
   
 ## Usage
@@ -10,14 +11,15 @@ To install, you'll need to have [Node.js](https://nodejs.org/) installed on your
 
 From your command line:
 ```bash
-# Clone this repository 
-$ git clone https://github.com/We-Bump/Lighthouse-mint-ui
+# Clone ui repository
+git clone https://github.com/We-Bump/Lighthouse-mint-ui
 
 # Go into the repository
-$ cd Lighthouse-mint-ui
+cd Lighthouse-launch-ui
 
 # Install dependencies
-$ npm install
+yarn
+
 ```
 
 
@@ -33,49 +35,63 @@ $ npm run build
 ## Configuration
 
 UI relies on `src/config.json` file for configuration of launch.
+
+The Lighthouse mint UI is used to deploy and mint NFTs on the SEI CosmWasm and SEI EVM. Only for NFT and CW404 Collections.
+
 ```json
 {
-	"name":"My Project",
-	"description":"",
-	"website":"",
-	"twitter":"",
-	"discord":"",
-	"rpc":"http://127.0.0.1:26657/",
-	"network":"atlantic-2",
-	"collection_address":"sei1tkzcnkln5fl8ytlcafcp9wdujw62hadwpn65c5lwz668275vlgys8tf88p",
-	"nft_name_type":"default",
-	"groups":[
-		{
-			"name":"whitelist",
-			"allowlist":[
-				"sei14v72v7hgzuvgck6v6jsgjacxnt34gj06qnx53d",
-				"sei1t22vwusjlxg4vp7gttsx7n2y9u4k0vv9lpk2ge"
-			]
-		},
-		{
-			"name":"public"
-		}
-	]
+    "name": "<project name>",
+    "description": "",
+    "website": "",
+    "socialX": "",
+    "discord": "",
+    "rpc_wasm": "<rpc url of wasm>",
+    "rpc_evm": "<rpc url of evm>",
+    "network": "<chain>",
+    "collection_address": "",
+    "pointer_address": "",
+    "nft_name_type": "default",
+    "groups": [
+        {
+            "name":"whitelist",
+            "allowlist":[
+                "sei1qlmlc9h6deamn6hqc7pfwxslvth77sgpu9ucdn",
+                "0xac98ab2de8f9184dfa93c3a186c3e14911b475b9"
+            ]
+        },
+        {
+            "name":"public"
+        },
+    ]
 }
 ```
+
+## Fields
+
 `name` - name to display on ui
 
 `description` - description to display on ui
 
-`rpc` - SEI rpc to interact with blockchain
+`rpc_wasm` - rpc url of wasm chain. (required)
 
-`network` - network to connect- available (atlantic-2) (pacific-1)
+`rpc_evm` - rpc url of evm chain. (if you are deploying on evm chain)
+
+`network` - network to connect.  Available networks [here](https://webump.xyz/basics/networks).
 
 `collection_address` - collection address to load
+
+`pointer_address` - pointer address to load. 
 
 `groups` - list of mint groups to display in the ui
 
 `nft_name_type` - type of minted nfts name to display in ui. available (default, token_id)
 
 ##### group options
+
 `name` - group name
 
-`allowlist` - array of allowlistled wallets. (if merkle root is set for minting group in lighthouse config)
+`allowlist` - array of allowlistled wallets. (if merkle root is set for minting group in lighthouse config) **0x addresses must be in lowercase**
+
 
 
 ## Contributing

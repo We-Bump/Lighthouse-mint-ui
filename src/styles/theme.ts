@@ -6,4 +6,5 @@ export const color = {
     white: "#F8F7FF",
     whiteShade: "#A8ABB4",
     bg:"#0A141B",
+    red:"#B23434"
 }

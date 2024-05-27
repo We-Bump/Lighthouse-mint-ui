@@ -189,3 +189,44 @@ export const MintBg = styled.div`
     width:100%;
     height:100%;
 `
+
+
+export const Token = styled.div`
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+`
+
+export const TokenImg = styled.div`
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    &>img{
+        width:100%;
+        object-fit:cover;
+    }
+`
+
+export const Amount = styled.div`
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:40px;
+    width:160px;
+    border-radius:8px;
+    border:1px solid ${color.primary};
+    background-color:${color.secondaryLight};
+    margin-top:8px;
+    margin-bottom:16px;
+`
+
+export const Description = styled.div`
+    font-size:14px;
+    color:${color.whiteShade};
+    &>span{
+        color:white;
+    }
+`

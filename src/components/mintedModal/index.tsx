@@ -2,6 +2,7 @@ import React, { useEffect } from "react"
 import * as C from "./style"
 import confetti from "canvas-confetti"
 import config from "config.json"
+import { formatNumber } from "utils/helpers"
 
 const MintedModal = (props: any) => {
 
@@ -24,40 +25,44 @@ const MintedModal = (props: any) => {
                 </C.DialogHeader>
                 <C.DialogBody>
 
-                    {props.mints.length === 1 && (
-                        <C.NftSingle>
-                            <C.Nft>
-                                <C.NftImage src={typeof props.mints[0].data === "undefined" ? `${props.tokenUri}/${props.mints[0]}` : props.mints[0].data.image}></C.NftImage>
-                                <C.NftTitle>
-                                    {config.nft_name_type === "default" && (
-                                        <>
-                                            {typeof props.mints[0].data === "undefined" ? (props.name + ' #' + props.mints[0]) : props.mints[0].data.name}
-                                        </>
-                                    )}
-                                    {config.nft_name_type === "token_id" && (
-                                        <>
-                                            {(props.name + ' #' + props.mints[0].mint)}
-                                        </>
-                                    )}
-                                </C.NftTitle>
-                            </C.Nft>
-                        </C.NftSingle>
-                    )}
 
-                    {props.mints.length > 1 && (
-                        <C.Nfts>
-                            {props.mints.map((mint: any, i:number) => (
-                                <C.Nft key={i}>
-                                    <C.NftImage src={typeof mint.data === "undefined" ? `${props.tokenUri}/${mint}` : mint.data.image}></C.NftImage>
+
+                    {props.mints.length === 1 && (
+                        <>
+                            <C.NftSingle>
+                                <C.Nft>
+                                    <C.NftImage src={props.mints[0].image}></C.NftImage>
                                     <C.NftTitle>
                                         {config.nft_name_type === "default" && (
                                             <>
-                                                {typeof mint.data === "undefined" ? (props.name + ' #' + mint) : mint.data.name}
+                                                {props.mints[0].name}
                                             </>
                                         )}
                                         {config.nft_name_type === "token_id" && (
                                             <>
-                                                {(props.name + ' #' + mint.mint)}
+                                                {(props.name + ' #' + props.mints[0].token_id)}
+                                            </>
+                                        )}
+                                    </C.NftTitle>
+                                </C.Nft>
+                            </C.NftSingle>
+                        </>
+                    )}
+
+                    {props.mints.length > 1 && (
+                        <C.Nfts>
+                            {props.mints.map((mint: any, i: number) => (
+                                <C.Nft key={i}>
+                                    <C.NftImage src={mint.image}></C.NftImage>
+                                    <C.NftTitle>
+                                        {config.nft_name_type === "default" && (
+                                            <>
+                                                {mint.name}
+                                            </>
+                                        )}
+                                        {config.nft_name_type === "token_id" && (
+                                            <>
+                                                {(props.name + ' #' + mint.token_id)}
                                             </>
                                         )}
                                     </C.NftTitle>
@@ -66,11 +71,37 @@ const MintedModal = (props: any) => {
                         </C.Nfts>
                     )}
 
+                    {props.amount && (
+                        <C.Token>
+                            {props.mints.length === 0 && (
+                                <>
+                                    <C.TokenImg>
+                                        <img src="/images/launch.png" alt={config.name} />
+                                    </C.TokenImg>
+                                    <C.Title>
+                                        You Minted
+                                    </C.Title>
+                                </>
+                            )}
+                            <C.Amount>
+                                {formatNumber(props.amount)} {props.symbol}
+                            </C.Amount>
+
+                            {props.previous && (
+                                <C.Description>
+                                    You have total of <span>{formatNumber(props.previous)} Tokens</span> in your wallet
+                                </C.Description>
+                            )}
+                        </C.Token>
+                    )}
+
                     <C.Bottom>
 
-                        <C.Title>
-                            Mint Successful!
-                        </C.Title>
+                        {props.mints.length > 1 && (
+                            <C.Title>
+                                Mint Successful!
+                            </C.Title>
+                        )}
 
                         <C.Button onClick={props.close}>
                             OK

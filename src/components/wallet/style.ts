@@ -27,6 +27,10 @@ export const WBalance = styled.div`
     font-size:12px;
 `
 
+export const WAddresses = styled.div`
+
+`
+
 export const WAddress = styled.div`
     color:${color.black};
     font-weight:500;

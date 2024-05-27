@@ -1,23 +1,25 @@
 {
     "name":"My Project",
     "description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu aliquet ultricies, urna elit aliquam nunc, quis aliquet nunc nisl quis nisl.",
-    "website":"",
-    "twitter":"",
-    "discord":"",
-    "rpc":"",
-    "network":"atlantic-2", 
-    "collection_address":"", 
+    "website": "",
+    "socialX": "",
+    "discord": "",
+    "rpc_wasm": "https://rpc-arctic-1.sei-apis.com",
+    "rpc_evm": "https://evm-rpc-arctic-1.sei-apis.com",
+    "network": "arctic-1",
+    "collection_address": "",
+    "pointer_address": "",
     "nft_name_type": "default",
     "groups":[
         {
-            "name":"whitelist",
-            "allowlist":[
-                "sei14v72v7hgzuvgck6v6jsgjacxnt34gj06qnx53d",
-                "sei1t22vwusjlxg4vp7gttsx7n2y9u4k0vv9lpk2ge"
-            ] 
+            "name": "whitelist",
+            "allowlist": [
+                "sei1qlmlc9h6deamn6hqc7pfwxslvth77sgpu9ucdn",
+                "0xac98ab2de8f9184dfa93c3a186c3e14911b475b9"
+            ]
         },
         {
-            "name":"public"
+            "name": "public"
         }
     ]
 }
